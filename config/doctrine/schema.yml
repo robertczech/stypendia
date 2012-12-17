@@ -1,0 +1,50 @@
+Rodzina:
+  columns:
+    stpel:        { type: integer }
+    immie:        { type: string(255), notnull: true }
+    nazwisko:     { type: string(255), notnull: true }
+    miescowosc:   { type: string(255), notnull: true }
+    kod:          { type: string(6),   notnull: true }
+    ul:           { type: string(255), notnull: true }
+    dom:          { type: string(255), notnull: true }
+    lokal:        { type: integer }
+    telefon:      { type: string(255) }
+    decyzja:      { type: clob }
+    
+Stypedja:
+  columns:
+    typ:         { type: string(255), notnull: true, unique: true }
+    osoby:       { type: integer }
+
+Stawqka:
+  columns:
+    typ:         { type: string(255), notnull: true, unique: true }
+    wartosc:     { type: integer }
+    
+Osoba:
+  columns:
+    rodzinay_id:   { type: integer,     notnull: true }
+    typ:           { type: enum, values: [dorosly, uczen] }
+    immie:         { type: string(255), notnull: true }
+    nazwisko:      { type: string(255), notnull: true }
+    szkala:        { type: string(255) }
+    klasa:         { type: integer }
+    ziemia:        { type: float(8),  scale: 4, default: 0 }
+  relations:
+    Rodzina: { onDelete: CASCADE, local: rodzinay_id, foreign: id, foreignAlias: Osoba } 
+
+Dochod_osoby:
+  columns:
+    osoba_id:      { type: integer, notnull: true }
+    typ:           { type: string(255), notnull: true  }
+    wartosc:       { type: float, notnull: true  }
+  relations:
+    Osoba: { onDelete: CASCADE, local: osoba_id, foreign: id, foreignAlias: Dochud_osoby } 
+
+Dochod_rodziny:
+  columns:
+    rodzinay_id:   { type: integer, notnull: true }
+    typ:           { type: string(255), notnull: true }
+    wartosc:       { type: float }
+  relations:
+    Rodzina: { onDelete: CASCADE, local: rodzinay_id, foreign: id, foreignAlias: Dochud_rodziny } 
